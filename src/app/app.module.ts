@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 //componentes
 import { NavbarSuperiorComponent } from './components/navbar-superior/navbar-superior.component';
@@ -20,7 +21,8 @@ import { DocumentosComponent } from './components/documentos/documentos.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
