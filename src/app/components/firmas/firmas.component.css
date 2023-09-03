@@ -18,3 +18,21 @@
     border-color: #218f8b;
     background-color: white;
 }
+
+.firma-tab{
+    margin-top: 70px;
+}
+
+.button-opciones{
+    border-radius: 6px;
+    padding: 2px 8px;
+    border-color: #218f8b;
+}
+
+.color-icon{
+    color: #218f8b;
+}
+
+.opciones{
+    min-width: min-content;
+}

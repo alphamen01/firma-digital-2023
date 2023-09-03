@@ -2,8 +2,61 @@
     <h3 class="fw-bold">Configurar Firmas</h3>
     <div class="container-fluid container-firma">
         <h5>Lista de Certificados por Empresa</h5>
-        <button type="button" class="btn button-firma col-md-2" routerLink="/FirmaAdd">Agregar nuevo</button>
+        <button type="button" class="btn button-firma col-lg-3" routerLink="/FirmaAdd">Agregar nuevo</button>
         
+        <!-- Tabla sin Paginar -->
+        <div class="table-responsive">
+            <table class="table table-hover firma-tab">                
+                <thead *ngIf="firmas != null && firmas.length > 0">
+                    <tr class="text-center">
+                        <th>Id</th>
+                        <th>Razon Social / Persona</th>
+                        <th>Tipo de Firma</th>       
+                        <th>Representante Legal</th>     
+                        <th>Empresa Acredit.</th>            
+                        <th>Fecha Emision</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Rubrica Escaneada</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="firmas != null && firmas.length > 0">
+                    <tr *ngFor="let firma of firmas" class="text-center">
+                        <td>{{firma.idFirma}}</td>
+                        <td>{{firma.razonSocial}}</td>
+                        <td *ngIf="firma.tipoFirma === stringOne">Firma Digital</td>
+                        <td *ngIf="firma.tipoFirma === stringTwo">Rubrica Escaneada</td>
+                        <td *ngIf="firma.tipoFirma === stringThree">Firma Electronica</td>
+                        <td>{{firma.representanteLegal}}</td>
+                        <td>{{firma.empresaAcreditadora}}</td>
+                        <td>{{firma.fechaEmision | date : "dd/MM/yy"}}</td>
+                        <td>{{firma.fechaVencimiento | date : "dd/MM/yy"}}</td>
+                        <td *ngIf="firma.rutaRubrica.length != 0">Correcto</td>
+                        <td> 
+                            <div class="btn-group dropup" role="group">
+                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical color-icon"></i>
+                                </button>
+                                <ul class="dropdown-menu opciones" >
+                                    <li><a class="dropdown-item" routerLink="/FirmaEdit/1"><i class="bi bi-pencil-square color-icon"></i></a></li>
+                                    <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-eye-fill color-icon"></i></a></li>
+                                    <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash-fill color-icon"></i></a></li>
+                                </ul>
+                            </div> 
+                        </td>
+                    </tr>            
+                </tbody>
+    
+                <thead *ngIf="firmas == null || firmas.length == 0">
+                    <tr>
+                        <th>No hay registros de Firmas.</th>              
+                    </tr>
+                </thead>
+    
+            </table>
+        <!-- <p *ngIf="!firmas || firmas.length == 0 " > No hay registros de Firmas.</p> -->
+        </div>
+
     </div>  
 </div>
 

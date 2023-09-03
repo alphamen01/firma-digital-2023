@@ -9,6 +9,9 @@ import { FirmaService } from 'src/app/services/firma.service';
 })
 export class FirmasComponent implements OnInit {
   firmas: Firma[] = [];
+  stringOne: string = "1";
+  stringTwo: string = "2";
+  stringThree: string = "3";
 
   constructor(private firmaService: FirmaService) {
   }
