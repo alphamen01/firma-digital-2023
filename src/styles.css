@@ -8,6 +8,10 @@
 
 body{
     position: relative;
-    font-family: sans-serif;
-    /* height: 100%; */
+    font-family: sans-serif;    
 }
+
+.global-fluid-container{
+    padding: 0px;
+}
+

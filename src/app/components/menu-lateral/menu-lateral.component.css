@@ -1,6 +1,6 @@
 .sidenav{
     background: #263238;
-    transition: all .2s ease;
+    transition: all .3s ease;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -42,7 +42,7 @@
             border-radius: 50%;
             background-color: transparent;
             border: none;
-
+            
             .fa-xmark {
                 color: #fff;
                 font-size: 24px;
@@ -76,7 +76,7 @@
             color: #f3f3f3;
             text-decoration: none;
             border-radius: 0.625rem;
-            transition: all .2s ease;
+            transition: all .3s ease;
             
             .sidenav-link-icon{
                 font-size: 22px;
