@@ -4,12 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //componentes
 import { NavbarSuperiorComponent } from './components/navbar-superior/navbar-superior.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { FirmasComponent } from './components/firmas/firmas.component';
 import { DocumentosComponent } from './components/documentos/documentos.component';
+import { ModalDetalleFirmaComponent } from './components/modal/modal-detalle-firma/modal-detalle-firma.component';
+
+//services
+import { FirmaService } from './services/firma.service';
+
 
 @NgModule({
   declarations: [
@@ -17,14 +23,17 @@ import { DocumentosComponent } from './components/documentos/documentos.componen
     NavbarSuperiorComponent,
     MenuLateralComponent,
     FirmasComponent,
-    DocumentosComponent
+    DocumentosComponent,
+    ModalDetalleFirmaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [FirmaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,4 +15,8 @@ export class FirmaService {
     //return this.http.get<Firma[]>(this.baseApiURL + 'firmasDigitales')
   }
 
+  getFirma(id:number): Observable<Firma>{
+    return this.http.get<Firma>(`${this.baseApiURL}firmaDigital/${id}`)
+  }
+
 }

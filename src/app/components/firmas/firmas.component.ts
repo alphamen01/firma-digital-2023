@@ -13,6 +13,8 @@ export class FirmasComponent implements OnInit {
   stringTwo: string = "2";
   stringThree: string = "3";
 
+  firmadata!: Firma;
+
   constructor(private firmaService: FirmaService) {
   }
 
@@ -26,6 +28,15 @@ export class FirmasComponent implements OnInit {
       next:(data) =>{
         this.firmas = data;
          console.log(data);
+      },error:(e)=>{}
+    })
+  }
+
+  obtenerFirma(id:number){
+    this.firmaService.getFirma(id).subscribe({
+      next:(datafirma) =>{
+        this.firmadata = datafirma
+         console.log(datafirma);
       },error:(e)=>{}
     })
   }
