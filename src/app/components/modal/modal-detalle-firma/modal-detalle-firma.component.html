@@ -1,40 +1,56 @@
-<div *ngIf="firmadata != null" class="modal-body">        
-            
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Tipo de Firma</button>
-      <!-- <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.tipoFirma}}'> -->
-      <input *ngIf="firmadata.tipoFirma === stringOne" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Firma Digital'>
-      <input *ngIf="firmadata.tipoFirma === stringTwo" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Rubrica Escaneada'>
-      <input *ngIf="firmadata.tipoFirma === stringThree" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Firma Electronica'>
-    </div>
-
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Razon Social</button>
-      <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.razonSocial}}'>
-    </div>
-
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Representante Legal</button>
-      <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.representanteLegal}}'>
-    </div>
-
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Empresa Acreditora</button>
-      <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.empresaAcreditadora}}'>
-    </div>
-
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Fecha Emision</button>
-      <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.fechaEmision | date : "dd/MM/yy"}}'>
-    </div>
-
-    <div class="input-group mb-3">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon1">Fecha Vencimiento</button>
-      <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.fechaVencimiento | date : "dd/MM/yy"}}'>
-    </div>
+<!-- Modal Detalle -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-4 mx-auto" id="exampleModalLabel">Detalle Firma</h1>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div *ngIf="firmadata != null" class="modal-body">        
+              
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Tipo de Firma</button>
+          <!-- <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.tipoFirma}}'> -->
+          <input *ngIf="firmadata.tipoFirma === stringOne" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Firma Digital'>
+          <input *ngIf="firmadata.tipoFirma === stringTwo" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Rubrica Escaneada'>
+          <input *ngIf="firmadata.tipoFirma === stringThree" type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='Firma Electronica'>
+        </div>
   
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Razon Social</button>
+          <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.razonSocial}}'>
+        </div>
   
-    <!-- <div class="text-center">
-        <img src="..." class="rounded" alt="...">
-    </div> -->
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Representante Legal</button>
+          <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.representanteLegal}}'>
+        </div>
+  
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Empresa Acreditora</button>
+          <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.empresaAcreditadora}}'>
+        </div>
+  
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Fecha Emision</button>
+          <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.fechaEmision | date : "dd/MM/yy"}}'>
+        </div>
+  
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1">Fecha Vencimiento</button>
+          <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" readonly value='{{firmadata.fechaVencimiento | date : "dd/MM/yy"}}'>
+        </div>
+      
+      
+        <!-- <div class="text-center">
+          <img src="..." class="rounded" alt="...">
+        </div> -->
+        
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

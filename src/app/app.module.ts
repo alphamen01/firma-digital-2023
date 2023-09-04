@@ -12,6 +12,7 @@ import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.com
 import { FirmasComponent } from './components/firmas/firmas.component';
 import { DocumentosComponent } from './components/documentos/documentos.component';
 import { ModalDetalleFirmaComponent } from './components/modal/modal-detalle-firma/modal-detalle-firma.component';
+import { ModalEliminarFirmaComponent } from './components/modal/modal-eliminar-firma/modal-eliminar-firma.component';
 
 //services
 import { FirmaService } from './services/firma.service';
@@ -24,7 +25,8 @@ import { FirmaService } from './services/firma.service';
     MenuLateralComponent,
     FirmasComponent,
     DocumentosComponent,
-    ModalDetalleFirmaComponent
+    ModalDetalleFirmaComponent,
+    ModalEliminarFirmaComponent
   ],
   imports: [
     BrowserModule,

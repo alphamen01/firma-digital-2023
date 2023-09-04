@@ -36,3 +36,8 @@
 .opciones{
     min-width: min-content;
 }
+
+.global-fluid-container{
+    padding: 0px;
+    padding-bottom: 20px;
+}

@@ -19,4 +19,8 @@ export class FirmaService {
     return this.http.get<Firma>(`${this.baseApiURL}firmaDigital/${id}`)
   }
 
+  deleteFirma(id:number): Observable<void>{
+    return this.http.delete<void>(`${this.baseApiURL}firmaDigital/${id}`);
+  }
+
 }
