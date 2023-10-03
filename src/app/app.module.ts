@@ -32,7 +32,6 @@ import { FirmaService } from './services/firma.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
     ReactiveFormsModule
   ],
   providers: [FirmaService],

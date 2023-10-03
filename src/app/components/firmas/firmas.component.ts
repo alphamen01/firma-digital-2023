@@ -1,4 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Firma } from 'src/app/models/firma.model';
 import { FirmaService } from 'src/app/services/firma.service';
 
@@ -15,13 +16,43 @@ export class FirmasComponent implements OnInit {
 
   firmadata!: Firma;
 
-  constructor(private firmaService: FirmaService) {
+  agregarFirma: FormGroup;
+  // rubricaFile!: File;
+  // certificadoFile!: File;
+
+  constructor(private firmaService: FirmaService, private fb: FormBuilder) {
+    this.agregarFirma = this.fb.group({
+      tipoFirma: ['',Validators.required],
+      certificadoDigital: ['',Validators.required],
+      razonSocial: ['',Validators.required],
+      representanteLegal: ['',Validators.required],
+      empresaAcreditadora: ['',Validators.required],
+      fechaEmision: ['',Validators.required],
+      fechaVencimiento: ['',Validators.required],
+      rutaRubrica: ['',Validators.required]
+    })
   }
 
   ngOnInit(): void {
       
     this.obtenerFirmas();
   }
+
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.agregarFirma.get('certificadoDigital')!.setValue(file);
+      
+    }
+  }
+
+  onFileSelect1(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];      
+      this.agregarFirma.get('rutaRubrica')!.setValue(file);        
+    }
+  }
+
 
   obtenerFirmas(){
     this.firmaService.getAllFirmas().subscribe({
@@ -40,4 +71,41 @@ export class FirmasComponent implements OnInit {
       },error:(e)=>{}
     })
   }
+
+  agregar(){
+    //console.log(this.agregarFirma);
+        const firmaform : Firma={
+          tipoFirma:this.agregarFirma.get('tipoFirma')?.value,
+          razonSocial:this.agregarFirma.get('razonSocial')?.value,
+          representanteLegal:this.agregarFirma.get('representanteLegal')?.value,
+          empresaAcreditadora: this.agregarFirma.get('empresaAcreditadora')?.value,
+          fechaEmision: this.agregarFirma.get('fechaEmision')?.value,
+          fechaVencimiento: this.agregarFirma.get('fechaVencimiento')?.value,
+          //rubricaFile: this.agregarFirma.get('rutaRubrica')?.value,
+          //certificadoFile: this.agregarFirma.get('certificadoDigital')?.value
+        }
+        
+        const formData = new FormData();
+        formData.append('FechaVencimiento', new Date(firmaform.fechaVencimiento).toUTCString());
+        formData.append('EmpresaAcreditadora', firmaform.empresaAcreditadora);
+        //formData.append('certificadoFile',firmaform.certificadoDigital);
+        formData.append('certificadoFile', this.agregarFirma.get('certificadoDigital')?.value);
+        formData.append('TipoFirma', firmaform.tipoFirma);
+        //formData.append('rubricaFile', firmaform.rutaRubrica);
+        formData.append('rubricaFile', this.agregarFirma.get('rutaRubrica')?.value);
+        formData.append('RepresentanteLegal',firmaform.representanteLegal);
+        formData.append('RazonSocial', firmaform.razonSocial);
+        formData.append('FechaEmision', new Date(firmaform.fechaEmision).toUTCString());
+
+        this.firmaService.postFirma(formData).subscribe(data =>{
+              console.log(data);
+              this.obtenerFirmas();
+            },
+            error => {
+              console.error('Error en la solicitud:', error);
+        })
+          
+        this.agregarFirma.reset();
+  }
+
 }
