@@ -2,6 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Firma } from 'src/app/models/firma.model';
 import { FirmaService } from 'src/app/services/firma.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-firmas',
@@ -17,8 +18,14 @@ export class FirmasComponent implements OnInit {
   firmadata!: Firma;
 
   agregarFirma: FormGroup;
-  // rubricaFile!: File;
-  // certificadoFile!: File;
+  modalTitle: string = 'Agregar';
+  adddata?:Firma;
+
+  /* ---------Descarga------ */
+  cdata?:Firma;
+  /*----------------------- */
+
+ 
 
   constructor(private firmaService: FirmaService, private fb: FormBuilder) {
     this.agregarFirma = this.fb.group({
@@ -33,19 +40,85 @@ export class FirmasComponent implements OnInit {
     })
   }
 
+  openModal(id?:number): void {
+  
+    this.modalTitle = id ? 'Editar' : 'Agregar';
+      console.log(id);
+      if(id !== undefined){
+      this.firmaService.getFirma(id!).subscribe({
+        next:(datafirma) =>{
+          this.adddata = datafirma
+          console.log(this.adddata);
+          console.log(datafirma.certificadoDigital)
+          console.log(datafirma.rutaRubrica)
+          const fecha = new Date(datafirma.fechaEmision);
+          const fecha1 = new Date(datafirma.fechaVencimiento);
+          // const blobCertificado = new Blob([datafirma.certificadoDigital!], { type: 'application/pdf' });
+          // console.log(blobCertificado)
+          // const fileCertificado = new File([blobCertificado!], 'certificadoDigital.pdf', { type: 'application/pdf' }); 
+          // console.log(fileCertificado)
+          
+          this.agregarFirma.patchValue({
+            tipoFirma: datafirma.tipoFirma,
+            razonSocial: datafirma.razonSocial,
+            representanteLegal: datafirma.representanteLegal,
+            empresaAcreditadora: datafirma.empresaAcreditadora,            
+            fechaEmision: format(fecha, 'yyyy-MM-dd'),
+            fechaVencimiento: format(fecha1, 'yyyy-MM-dd'),
+            //certificadoDigital: fileCertificado
+            // rutaRubrica: datafirma.rutaRubrica
+          })
+
+          console.log(this.agregarFirma)
+  
+        },error:(e)=>{}
+      })
+      }else{
+        this.adddata = undefined;
+      }
+      
+    }
+
   ngOnInit(): void {
       
     this.obtenerFirmas();
   }
-
+/* --------------------------CARGA CERTIFICADO----------------------------------------------------------- */
   // onFileSelect(event: any) {
   //   if (event.target.files.length > 0) {
   //     const file = event.target.files[0];
   //     this.agregarFirma.get('certificadoDigital')!.setValue(file);
       
   //   }
+  // } 
+
+  // onFileChange(event: any) {
+  //   const file = event.target.files[0]; // Obtener el archivo seleccionado
+  //   this.agregarFirma.get('certificadoDigital')?.setValue(file); // Asignar el archivo al FormControl
   // }
 
+  onFileChange(event: any) {
+    const file = event.target.files[0]; // Obtener el archivo seleccionado
+  
+    // Verificar si el archivo es una PDF
+    if (this.esArchivoPDF(file)) {
+      this.agregarFirma.get('certificadoDigital')?.setValue(file); // Asignar el archivo al FormControl
+    } else {
+      // El archivo no es un PDF, puedes mostrar un mensaje de error o realizar alguna acción.
+      console.error('Por favor, seleccione un archivo PDF.');
+      // También puedes reiniciar el input de archivo para deseleccionar el archivo no válido.
+      event.target.value = null;
+    }
+  }    
+
+  esArchivoPDF(file: File): boolean {
+    // Verificar la extensión del archivo
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    return extension === 'pdf';
+  }
+/*--------------------------------------------------------------------------------------------------------- */
+
+/* ------------------------------------CARGA RUBRICA------------------------------------ */
   // onFileSelect1(event: any) {
   //   if (event.target.files.length > 0) {
   //     const file = event.target.files[0];      
@@ -53,15 +126,31 @@ export class FirmasComponent implements OnInit {
   //   }
   // }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0]; // Obtener el archivo seleccionado
-    this.agregarFirma.get('certificadoDigital')?.setValue(file); // Asignar el archivo al FormControl
-  }
+  // onFileChange1(event: any) {
+  //   const file = event.target.files[0]; // Obtener el archivo seleccionado
+  //   this.agregarFirma.get('rutaRubrica')?.setValue(file); // Asignar el archivo al FormControl
+  // }
 
   onFileChange1(event: any) {
     const file = event.target.files[0]; // Obtener el archivo seleccionado
-    this.agregarFirma.get('rutaRubrica')?.setValue(file); // Asignar el archivo al FormControl
+  
+    // Verificar si el archivo es un archivo JPG o PNG
+    if (this.esArchivoJPGoPNG(file)) {
+      this.agregarFirma.get('rutaRubrica')?.setValue(file); // Asignar el archivo al FormControl
+    } else {
+      // El archivo no es un JPG o PNG, puedes mostrar un mensaje de error o realizar alguna acción.
+      console.error('Por favor, seleccione un archivo JPG o PNG.');
+      // También puedes reiniciar el input de archivo para deseleccionar el archivo no válido.
+      event.target.value = null;
+    }
   }
+  
+  esArchivoJPGoPNG(file: File): boolean {
+    // Verificar la extensión del archivo
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    return extension === 'jpg' || extension === 'png';
+  }
+/*--------------------------------------------------------------------------------------------------------- */
 
   obtenerFirmas(){
     this.firmaService.getAllFirmas().subscribe({
@@ -81,8 +170,62 @@ export class FirmasComponent implements OnInit {
     })
   }
 
+/* Descarga de Firma y Certificado */
+descargarFirma(id:number){
+  this.firmaService.getFirma(id).subscribe({
+    next:(dataarea) =>{
+      this.cdata = dataarea
+      console.log(this.cdata); 
+    },error:(e)=>{}
+  })  
+  if (id !== undefined && id !== 0) {
+    this.firmaService.getRubrica(id).subscribe((data: Blob)=>{
+      // Crea una URL de objeto para el Blob
+      const blob = new Blob([data], { type: 'image/jpeg' });
+      const url = window.URL.createObjectURL(blob);         
+      // Crea un enlace para descargar el archivo PDF
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `firma-${this.cdata?.razonSocial}.jpg`; // Nombre del archivo al descargarlo
+      a.target = '_blank'; // Abre el enlace en una nueva pestaña
+      // Simula un clic en el enlace para iniciar la descarga
+      a.click();
+      // Libera la URL del objeto para evitar pérdidas de memoria
+      window.URL.revokeObjectURL(url);
+      console.log('La descarga de la firma se completo exitosamente')
+    })
+  } 
+}
+
+descargarCertificado(id:number){
+  this.firmaService.getFirma(id).subscribe({
+    next:(dataarea) =>{
+      this.cdata = dataarea
+      console.log(this.cdata); 
+    },error:(e)=>{}
+  })
+  if (id !== undefined && id !== 0) {
+    this.firmaService.getCertificado(id).subscribe((data: Blob)=>{
+      // Crea una URL de objeto para el Blob
+      const blob = new Blob([data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);         
+      // Crea un enlace para descargar el archivo PDF
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `certifificado-${this.cdata?.razonSocial}.pdf`; // Nombre del archivo al descargarlo
+      a.target = '_blank'; // Abre el enlace en una nueva pestaña
+      // Simula un clic en el enlace para iniciar la descarga
+      a.click();
+      // Libera la URL del objeto para evitar pérdidas de memoria
+      window.URL.revokeObjectURL(url);
+      console.log('La descarga del certificado se completo exitosamente')
+    })
+  }
+}
+/* -------------------------------------------------- */
+
   agregar(){
-    //console.log(this.agregarFirma);
+    console.log(this.agregarFirma);
         const firmaform : Firma={
           tipoFirma:this.agregarFirma.get('tipoFirma')?.value,
           razonSocial:this.agregarFirma.get('razonSocial')?.value,

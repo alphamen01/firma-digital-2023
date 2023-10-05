@@ -2,7 +2,7 @@
     <h3 class="fw-bold">Configurar Firmas</h3>
     <div class="container-fluid container-firma">
         <h5>Lista de Certificados por Empresa</h5>
-        <button type="button" class="btn button-firma col-lg-3" data-bs-toggle="modal" data-bs-target="#addModal">Agregar nuevo</button>
+        <button type="button" class="btn button-firma col-lg-3" data-bs-toggle="modal" data-bs-target="#addModal"(click)="openModal()">Agregar nuevo</button>
         
         <!-- Tabla sin Paginar -->
         <div class="table-responsive">
@@ -17,7 +17,8 @@
                         <th>Fecha Emision</th>
                         <th>Fecha Vencimiento</th>
                         <th>Rubrica Escaneada</th>
-                        <th>Opciones</th>
+                        <th>Descargas</th>
+                        <th>Opciones</th>                        
                     </tr>
                 </thead>
                 <tbody *ngIf="firmas != null && firmas.length > 0">
@@ -38,12 +39,24 @@
                                 <i class="bi bi-three-dots-vertical color-icon"></i>
                                 </button>
                                 <ul class="dropdown-menu opciones" >
-                                    <li><a class="dropdown-item" routerLink="/FirmaEdit/1"><i class="bi bi-pencil-square color-icon"></i></a></li>
+                                    <li><a class="dropdown-item" (click)="descargarFirma(firma.idFirma!)"><i class="bi bi-arrow-down-circle-fill color-icon"></i></a></li>
+                                    
+                                    <li><a class="dropdown-item" (click)="descargarCertificado(firma.idFirma!)" ><i class="bi bi-file-earmark-arrow-down-fill color-icon"></i></a></li>                                   
+                                </ul>
+                            </div> 
+                        </td>
+                        <td> 
+                            <div class="btn-group dropup" role="group">
+                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical color-icon"></i>
+                                </button>
+                                <ul class="dropdown-menu opciones" >
+                                    <li><a class="dropdown-item" (click)="openModal(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-pencil-square color-icon"></i></a></li>
                                     <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-eye-fill color-icon"></i></a></li>
                                     <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)"  data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash-fill color-icon"></i></a></li>
                                 </ul>
                             </div> 
-                        </td>
+                        </td>                        
                     </tr>            
                 </tbody>
     
@@ -69,7 +82,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title mx-auto">Agregar Firma</h5>
+          <h5 class="modal-title mx-auto">{{modalTitle}} Firma</h5>
         </div>
         <div class="modal-body">
             
@@ -94,7 +107,7 @@
                     </div> 
                     <div class="mb-3 col-md" >
                         <label for="certificadoDigital" class="form-label">Subir Certificado</label>
-                        <input type="file" class="form-control" id="certificadoDigital" name="certificadoDigital"  (change)="onFileChange($event)">
+                        <input type="file" class="form-control" id="certificadoDigital" name="certificadoDigital" accept=".pdf" (change)="onFileChange($event)">
                         <span *ngIf="agregarFirma.get('certificadoDigital')?.invalid && agregarFirma.get('certificadoDigital')?.touched" class="text-danger">
                             El <strong> certificado </strong>es requerido.
                         </span>
@@ -163,7 +176,7 @@
                 <div class="row g-2">
                     <div class="mb-3 col-md">
                         <label for="rutaRubrica" class="form-label">Rubrica Escaneada</label>
-                        <input type="file" class="form-control" id="rutaRubrica" name="rutaRubrica" accept=".png, .jpeg, .jpg, .gif, .jfif" (change)="onFileChange1($event)">
+                        <input type="file" class="form-control" id="rutaRubrica" name="rutaRubrica" accept=".png, .jpg" (change)="onFileChange1($event)">
                         <span *ngIf="agregarFirma.get('rutaRubrica')?.invalid && agregarFirma.get('rutaRubrica')?.touched" class="text-danger">
                             La <strong> Rubrica Escaneada </strong>es requerido.
                         </span>                      

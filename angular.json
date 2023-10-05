@@ -15,6 +15,7 @@
           "options": {
             "outputPath": "dist/firma-digital-2023",
             "index": "src/index.html",
+            "commonChunk": true,
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"

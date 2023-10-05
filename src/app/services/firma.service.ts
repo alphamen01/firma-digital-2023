@@ -33,4 +33,26 @@ export class FirmaService {
     return this.http.post<Firma>(`${this.baseApiURL}firmaDigitalA`, firma, {headers});
   }
  
+
+  //DESCARGAS
+
+  getRubrica(id:number): Observable<Blob>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/octet-stream'
+      // Otras cabeceras personalizadas si es necesario
+    });
+    return this.http.get(`${this.baseApiURL}descargarFirma/${id}`,{responseType: 'blob',
+    headers: headers});
+    //return this.http.delete<void>(`${this.baseApiURL}firmaDigital/${id}`);
+  }
+
+  getCertificado(id:number): Observable<Blob>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/octet-stream'
+      // Otras cabeceras personalizadas si es necesario
+    });
+    return this.http.get(`${this.baseApiURL}descargarCertificado/${id}`, {responseType: 'blob',
+    headers: headers});
+    //return this.http.delete<void>(`${this.baseApiURL}firmaDigital/${id}`);
+  }
 }
