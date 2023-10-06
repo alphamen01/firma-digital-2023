@@ -1,6 +1,6 @@
 <!-- Modal Detalle -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-4 mx-auto" id="exampleModalLabel">Detalle Firma</h1>
@@ -42,9 +42,19 @@
         </div>
       
       
-        <!-- <div class="text-center">
-          <img src="..." class="rounded" alt="...">
-        </div> -->
+        <div class="input-group mb-3">
+          <!-- <p>Nombre del archivo: {{ rubricaimg.name }}</p>
+          <p>Tamaño del archivo: {{ rubricaimg.size }} bytes</p>
+          <p> {{firmadata.rutaRubrica}}</p>
+          <img [src]="'imageSrc'"> -->
+          <img [src]="'data:image/jpg;base64,'+ firmadata.rutaRubrica" class="img-fluid img-thumbnail" />
+        </div>
+
+        <div class="input-group mb-3 d-flex justify-content-center">
+          <button type="button" class="btn-light button-opciones" (click)="descargarCertificado(firmadata.idFirma!)" aria-expanded="false">
+            <i class="bi bi-cloud-arrow-down-fill color-icon"></i>
+          </button>
+        </div>
         
       </div>
       

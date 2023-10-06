@@ -1,0 +1,18 @@
+.button-opciones{
+    border-radius: 6px;
+    padding: 8px 16px;
+    border-color: #218f8b;
+
+    
+}
+
+.button-opciones:hover{
+    color: #218f8b;
+    border-color: #218f8b;
+    background-color: white;
+}
+
+.color-icon{
+    color: #218f8b;
+    font-size: 30px;
+}

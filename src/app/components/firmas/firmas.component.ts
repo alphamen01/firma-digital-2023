@@ -17,6 +17,8 @@ export class FirmasComponent implements OnInit {
   stringThree: string = "3";
 
   firmadata!: Firma;
+  // rubricaimg!: File;  
+  // imageSrc: string | undefined;
 
   agregarFirma: FormGroup;
   modalTitle: string = 'Agregar';
@@ -25,8 +27,6 @@ export class FirmasComponent implements OnInit {
   /* ---------Descarga------ */
   cdata?:Firma;
   /*----------------------- */
-
- 
 
   constructor(private firmaService: FirmaService, private fb: FormBuilder, private toastr: ToastrService) {
     this.agregarFirma = this.fb.group({
@@ -50,8 +50,8 @@ export class FirmasComponent implements OnInit {
         next:(datafirma) =>{
           this.adddata = datafirma
           console.log(this.adddata);
-          console.log(datafirma.certificadoDigital)
-          console.log(datafirma.rutaRubrica)
+          //console.log(datafirma.certificadoDigital)
+          //console.log(datafirma.rutaRubrica)
           const fecha = new Date(datafirma.fechaEmision);
           const fecha1 = new Date(datafirma.fechaVencimiento);
           // const blobCertificado = new Blob([datafirma.certificadoDigital!], { type: 'application/pdf' });
@@ -165,8 +165,22 @@ export class FirmasComponent implements OnInit {
   obtenerFirma(id:number){
     this.firmaService.getFirma(id).subscribe({
       next:(datafirma) =>{
-        this.firmadata = datafirma
-         console.log(datafirma);
+        /*console.log(datafirma.rutaRubrica)
+         const blobRubrica = new Blob([datafirma.rutaRubrica!], { type: 'image/jpeg' });
+         console.log(blobRubrica)
+         const fileRubrica = new File([blobRubrica!], `firma-${datafirma.razonSocial}.jpg`, { type: 'image/jpeg' }); 
+         console.log(fileRubrica)
+         this.rubricaimg = fileRubrica
+         console.log(this.rubricaimg)
+         const reader = new FileReader();
+         reader.onload = (e: any) => {
+          this.imageSrc = e.target.result;
+          console.log(this.imageSrc)
+        };
+        reader.readAsDataURL(fileRubrica); */       
+         this.firmadata = datafirma
+         console.log(this.firmadata);
+         
       },error:(e)=>{}
     })
   }
