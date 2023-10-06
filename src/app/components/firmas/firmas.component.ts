@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Firma } from 'src/app/models/firma.model';
 import { FirmaService } from 'src/app/services/firma.service';
 import { format } from 'date-fns';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-firmas',
@@ -27,7 +28,7 @@ export class FirmasComponent implements OnInit {
 
  
 
-  constructor(private firmaService: FirmaService, private fb: FormBuilder) {
+  constructor(private firmaService: FirmaService, private fb: FormBuilder, private toastr: ToastrService) {
     this.agregarFirma = this.fb.group({
       tipoFirma: ['',Validators.required],
       certificadoDigital: [null,Validators.required],
@@ -192,7 +193,8 @@ descargarFirma(id:number){
       a.click();
       // Libera la URL del objeto para evitar pérdidas de memoria
       window.URL.revokeObjectURL(url);
-      console.log('La descarga de la firma se completo exitosamente')
+      this.toastr.info('El proceso de descarga de la rubrica fue exitoso!', 'Descarga Rubrica');
+      console.log('La descarga de la rubrica se completo exitosamente')
     })
   } 
 }
@@ -218,6 +220,7 @@ descargarCertificado(id:number){
       a.click();
       // Libera la URL del objeto para evitar pérdidas de memoria
       window.URL.revokeObjectURL(url);
+      this.toastr.info('El proceso de descarga del certificado fue exitoso!', 'Descarga Certificado');
       console.log('La descarga del certificado se completo exitosamente')
     })
   }
@@ -255,6 +258,7 @@ descargarCertificado(id:number){
 
         this.firmaService.postFirma(formData).subscribe(data =>{
               console.log(data);
+              this.toastr.success('La firma fue creada con exito!', 'Registro creado');
               this.obtenerFirmas();
             },
             error => {
