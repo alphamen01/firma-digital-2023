@@ -2,7 +2,7 @@
     <h3 class="fw-bold">Configurar Firmas</h3>
     <div class="container-fluid container-firma">
         <h5>Lista de Certificados por Empresa</h5>
-        <button type="button" class="btn button-firma col-lg-3" data-bs-toggle="modal" data-bs-target="#addModal"(click)="openModal()">Agregar nuevo</button>
+        <button type="button" class="btn button-firma col-lg-3" data-bs-toggle="modal" data-bs-target="#addModal"(click)="openModal()" title="Agregar Firma">Agregar nuevo</button>
         
         <!-- Tabla sin Paginar -->
         <div class="table-responsive">
@@ -35,25 +35,25 @@
                         <td *ngIf="firma.rutaRubrica?.length != 0">Correcto</td>
                         <td> 
                             <div class="btn-group dropup" role="group">
-                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false" title="Descargas">
                                 <i class="bi bi-three-dots-vertical color-icon"></i>
                                 </button>
                                 <ul class="dropdown-menu opciones" >
-                                    <li><a class="dropdown-item" (click)="descargarFirma(firma.idFirma!)"><i class="bi bi-arrow-down-circle-fill color-icon"></i></a></li>
+                                    <li><a class="dropdown-item" (click)="descargarFirma(firma.idFirma!)" title="Descargar Rubrica"><i class="bi bi-arrow-down-circle-fill color-icon"></i></a></li>
                                     
-                                    <li><a class="dropdown-item" (click)="descargarCertificado(firma.idFirma!)" ><i class="bi bi-file-earmark-arrow-down-fill color-icon"></i></a></li>                                   
+                                    <li><a class="dropdown-item" (click)="descargarCertificado(firma.idFirma!)" title="Descargar Certificado"><i class="bi bi-file-earmark-arrow-down-fill color-icon"></i></a></li>                                   
                                 </ul>
                             </div> 
                         </td>
                         <td> 
                             <div class="btn-group dropup" role="group">
-                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn-light button-opciones" data-bs-toggle="dropdown" aria-expanded="false" title="Opciones">
                                 <i class="bi bi-three-dots-vertical color-icon"></i>
                                 </button>
                                 <ul class="dropdown-menu opciones" >
-                                    <li><a class="dropdown-item" (click)="openModal(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#addModal"><i class="bi bi-pencil-square color-icon"></i></a></li>
-                                    <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-eye-fill color-icon"></i></a></li>
-                                    <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)"  data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash-fill color-icon"></i></a></li>
+                                    <li><a class="dropdown-item" (click)="openModal(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#addModal" title="Editar Firma"><i class="bi bi-pencil-square color-icon"></i></a></li>
+                                    <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Mostrar Firma"><i class="bi bi-eye-fill color-icon"></i></a></li>
+                                    <li><a class="dropdown-item" (click)="obtenerFirma(firma.idFirma!)"  data-bs-toggle="modal" data-bs-target="#deleteModal" title="Eliminar Firma"><i class="bi bi-trash-fill color-icon"></i></a></li>
                                 </ul>
                             </div> 
                         </td>                        

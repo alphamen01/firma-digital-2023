@@ -188,9 +188,9 @@ export class FirmasComponent implements OnInit {
 /* Descarga de Firma y Certificado */
 descargarFirma(id:number){
   this.firmaService.getFirma(id).subscribe({
-    next:(dataarea) =>{
-      this.cdata = dataarea
-      console.log(this.cdata); 
+    next:(datafirma) =>{
+      this.cdata = datafirma
+      //console.log(this.cdata); 
     },error:(e)=>{}
   })  
   if (id !== undefined && id !== 0) {
@@ -208,16 +208,16 @@ descargarFirma(id:number){
       // Libera la URL del objeto para evitar pérdidas de memoria
       window.URL.revokeObjectURL(url);
       this.toastr.info('El proceso de descarga de la rubrica fue exitoso!', 'Descarga Rubrica');
-      console.log('La descarga de la rubrica se completo exitosamente')
+      console.log('El proceso de descarga de la rubrica se completo exitosamente')
     })
   } 
 }
 
 descargarCertificado(id:number){
   this.firmaService.getFirma(id).subscribe({
-    next:(dataarea) =>{
-      this.cdata = dataarea
-      console.log(this.cdata); 
+    next:(datacertificado) =>{
+      this.cdata = datacertificado
+      //console.log(this.cdata); 
     },error:(e)=>{}
   })
   if (id !== undefined && id !== 0) {
@@ -235,7 +235,7 @@ descargarCertificado(id:number){
       // Libera la URL del objeto para evitar pérdidas de memoria
       window.URL.revokeObjectURL(url);
       this.toastr.info('El proceso de descarga del certificado fue exitoso!', 'Descarga Certificado');
-      console.log('La descarga del certificado se completo exitosamente')
+      console.log('El proceso de descarga del certificado se completo exitosamente')
     })
   }
 }
