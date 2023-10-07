@@ -8,6 +8,6 @@ export interface Firma{
     fechaVencimiento: Date,
     rutaRubrica?: string,
     certificadoDigital?: string,
-    rubricaFile: File | null,
-    certificadoFile: File | null
+    rubricaFile?: File | null,
+    certificadoFile?: File | null
 }

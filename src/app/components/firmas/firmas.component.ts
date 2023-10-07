@@ -21,6 +21,7 @@ export class FirmasComponent implements OnInit {
   // imageSrc: string | undefined;
 
   agregarFirma: FormGroup;
+  editarFirma: FormGroup;
   modalTitle: string = 'Agregar';
   adddata?:Firma;
 
@@ -28,7 +29,9 @@ export class FirmasComponent implements OnInit {
   cdata?:Firma;
   /*----------------------- */
 
+  //editCertificado!: File;
   constructor(private firmaService: FirmaService, private fb: FormBuilder, private toastr: ToastrService) {
+    /* Para el formulario de agregar*/
     this.agregarFirma = this.fb.group({
       tipoFirma: ['',Validators.required],
       certificadoDigital: [null,Validators.required],
@@ -39,27 +42,37 @@ export class FirmasComponent implements OnInit {
       fechaVencimiento: ['',Validators.required],
       rutaRubrica: [null,Validators.required]
     })
+    /* Para el formulario de editar datos de la firma */
+    this.editarFirma = this.fb.group({
+      tipoFirma: ['',Validators.required],
+      razonSocial: ['',Validators.required],
+      representanteLegal: ['',Validators.required],
+      empresaAcreditadora: ['',Validators.required],
+      fechaEmision: ['',Validators.required],
+      fechaVencimiento: ['',Validators.required]
+    })
+
   }
 
   openModal(id?:number): void {
   
     this.modalTitle = id ? 'Editar' : 'Agregar';
-      console.log(id);
+      //console.log(id);
       if(id !== undefined){
       this.firmaService.getFirma(id!).subscribe({
         next:(datafirma) =>{
           this.adddata = datafirma
-          console.log(this.adddata);
+          //console.log(this.adddata);
           //console.log(datafirma.certificadoDigital)
           //console.log(datafirma.rutaRubrica)
           const fecha = new Date(datafirma.fechaEmision);
           const fecha1 = new Date(datafirma.fechaVencimiento);
           // const blobCertificado = new Blob([datafirma.certificadoDigital!], { type: 'application/pdf' });
           // console.log(blobCertificado)
-          // const fileCertificado = new File([blobCertificado!], 'certificadoDigital.pdf', { type: 'application/pdf' }); 
-          // console.log(fileCertificado)
-          
-          this.agregarFirma.patchValue({
+          //  const fileCertificado = new File([blobCertificado!],  ''+datafirma.razonSocial +'.pdf', { type: 'application/pdf' }); 
+          //  console.log(fileCertificado)
+          //   this.editCertificado = fileCertificado;
+          this.editarFirma.patchValue({
             tipoFirma: datafirma.tipoFirma,
             razonSocial: datafirma.razonSocial,
             representanteLegal: datafirma.representanteLegal,
@@ -70,7 +83,7 @@ export class FirmasComponent implements OnInit {
             // rutaRubrica: datafirma.rutaRubrica
           })
 
-          console.log(this.agregarFirma)
+          //console.log(this.agregarFirma)
   
         },error:(e)=>{}
       })
@@ -185,7 +198,7 @@ export class FirmasComponent implements OnInit {
     })
   }
 
-/* Descarga de Firma y Certificado */
+/*---------------------------------- Descarga de Firma y Certificado----------------------------------------------*/
 descargarFirma(id:number){
   this.firmaService.getFirma(id).subscribe({
     next:(datafirma) =>{
@@ -239,10 +252,14 @@ descargarCertificado(id:number){
     })
   }
 }
-/* -------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------ */
 
-  agregar(){
-    console.log(this.agregarFirma);
+  agregar(id?: number | null){
+    //console.log(id);
+    if (id == undefined || id === 0) {
+      //AGREGAR
+
+        //console.log(this.agregarFirma);
         const firmaform : Firma={
           tipoFirma:this.agregarFirma.get('tipoFirma')?.value,
           razonSocial:this.agregarFirma.get('razonSocial')?.value,
@@ -253,8 +270,8 @@ descargarCertificado(id:number){
           rubricaFile: this.agregarFirma.get('rutaRubrica')?.value,
           certificadoFile: this.agregarFirma.get('certificadoDigital')?.value
         }
-        console.log(firmaform.certificadoFile)
-        console.log(firmaform.rubricaFile)
+        //console.log(firmaform.certificadoFile)
+        //console.log(firmaform.rubricaFile)
 
         const formData = new FormData();
         formData.append('FechaVencimiento', new Date(firmaform.fechaVencimiento).toUTCString());
@@ -268,18 +285,70 @@ descargarCertificado(id:number){
         formData.append('RazonSocial', firmaform.razonSocial);
         formData.append('FechaEmision', new Date(firmaform.fechaEmision).toUTCString());
 
-        console.log(formData)
+        //console.log(formData)
 
         this.firmaService.postFirma(formData).subscribe(data =>{
-              console.log(data);
+              //console.log(data);
               this.toastr.success('La firma fue creada con exito!', 'Registro creado');
               this.obtenerFirmas();
             },
             error => {
               console.error('Error en la solicitud:', error);
         })
-          
-        this.agregarFirma.reset();
+        
+    }else{
+      //EDITAR 
+
+      //console.log(this.editarFirma);
+        const firmaform : Firma={
+          idFirma: this.adddata?.idFirma,
+          tipoFirma:this.editarFirma.get('tipoFirma')?.value,
+          razonSocial:this.editarFirma.get('razonSocial')?.value,
+          representanteLegal:this.editarFirma.get('representanteLegal')?.value,
+          empresaAcreditadora: this.editarFirma.get('empresaAcreditadora')?.value,
+          fechaEmision: this.editarFirma.get('fechaEmision')?.value,
+          fechaVencimiento: this.editarFirma.get('fechaVencimiento')?.value,
+          rutaRubrica: this.adddata?.rutaRubrica,
+          certificadoDigital: this.adddata?.certificadoDigital
+        }
+        //console.log(firmaform.rutaRubrica)
+        //console.log(firmaform.certificadoDigital)
+
+        const formData = new FormData();
+        formData.append('idFirma', firmaform.idFirma!.toString());
+        formData.append('FechaVencimiento', new Date(firmaform.fechaVencimiento).toUTCString());
+        formData.append('EmpresaAcreditadora', firmaform.empresaAcreditadora);
+        formData.append('certificadoDigital',firmaform.certificadoDigital!);
+        //formData.append('certificadoFile', this.agregarFirma.get('certificadoDigital')?.value);
+        formData.append('TipoFirma', firmaform.tipoFirma);
+        formData.append('rutaRubrica', firmaform.rutaRubrica!);
+        //formData.append('rubricaFile', this.agregarFirma.get('rutaRubrica')?.value);
+        formData.append('RepresentanteLegal',firmaform.representanteLegal);
+        formData.append('RazonSocial', firmaform.razonSocial);
+        formData.append('FechaEmision', new Date(firmaform.fechaEmision).toUTCString());
+
+        //console.log(formData)
+
+        this.firmaService.putFirma(id,formData).subscribe(data =>{
+              //console.log(data);
+              this.toastr.info('La datos de la firma fue actualizada con exito!', 'Registro actualizado');
+              this.obtenerFirmas();
+            },
+            error => {
+              console.error('Error en la solicitud:', error);
+        })
+    }
+    this.editarFirma.reset();
+    this.agregarFirma.reset();
+
+    // Obtener el elemento de entrada de tipo archivo
+    var inputFileC = document.getElementById('certificadoDigital') as HTMLInputElement;
+    var inputFileR = document.getElementById('rutaRubrica') as HTMLInputElement;
+
+    // Limpiar el valor del campo de entrada de tipo archivo
+    inputFileC.value = '';
+    inputFileR.value = '';
+    
   }
 
 }

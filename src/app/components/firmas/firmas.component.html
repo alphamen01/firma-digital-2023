@@ -86,14 +86,9 @@
         </div>
         <div class="modal-body">
             
-             <form [formGroup]="agregarFirma" (ngSubmit)="agregar()" enctype="multipart/form-data">
+            <form [formGroup]="agregarFirma" (ngSubmit)="agregar()" enctype="multipart/form-data" *ngIf="adddata?.idFirma == undefined">
                 <div class="row g-2">
                     <div class="mb-3 col-md">
-                        <!-- <label for="descripcion" class="form-label">Descripcion</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" autocomplete="off" formControlName="descripcion">
-                        <span *ngIf="agregarFirma.get('descripcion')?.invalid && agregarFirma.get('descripcion')?.touched" class="text-danger">
-                            La <strong>descripcion </strong>es requerido.
-                        </span> -->
                         <label for="tipoFirma" class="form-label">Tipo de Firma</label>
                         <select class="form-select" id="tipoFirma" name="tipoFirma" formControlName="tipoFirma" >
                             <option></option>
@@ -113,6 +108,7 @@
                         </span>
                     </div>
                 </div>
+
                 <div class="row g-2">
                     <div class="mb-3 col-md">
                         <label for="razonSocial" class="form-label">Razon Social / Persona</label>
@@ -190,7 +186,71 @@
                     <button type="submit" [disabled]="agregarFirma.invalid" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                 </div>
                 
-            </form>        
+            </form> 
+            
+            <form [formGroup]="editarFirma" (ngSubmit)="agregar(adddata?.idFirma)" enctype="multipart/form-data" *ngIf="adddata?.idFirma != undefined">
+                <div class="row g-2">
+                    <div class="mb-3 col-md">                        
+                        <label for="tipoFirma" class="form-label">Tipo de Firma</label>
+                        <select class="form-select" id="tipoFirma" name="tipoFirma" formControlName="tipoFirma" >
+                            <option></option>
+                            <option value="1">Firma Digital</option>
+                            <option value="2">Rubrica Escaneada</option>
+                            <option value="3">Firma Electrónica</option>                           
+                        </select>
+                        <span *ngIf="editarFirma.get('tipoFirma')?.invalid && editarFirma.get('tipoFirma')?.touched" class="text-danger">
+                            El <strong>Tipo de Firma </strong>es requerido.
+                        </span>
+                    </div>
+                    <div class="mb-3 col-md">
+                        <label for="razonSocial" class="form-label">Razon Social / Persona</label>
+                        <input type="text" class="form-control" id="razonSocial" name="razonSocial" autocomplete="off" formControlName="razonSocial">
+                        <span *ngIf="editarFirma.get('razonSocial')?.invalid && editarFirma.get('razonSocial')?.touched" class="text-danger">
+                            La <strong>Razon Social / Persona </strong>es requerido.
+                        </span>                       
+                    </div>            
+                </div>
+
+                <div class="row g-2">
+                    <div class="mb-3 col-md">
+                        <label for="representanteLegal" class="form-label">Representante Legal</label>
+                        <input type="text" class="form-control" id="representanteLegal" name="representanteLegal" autocomplete="off" formControlName="representanteLegal">
+                        <span *ngIf="editarFirma.get('representanteLegal')?.invalid && editarFirma.get('representanteLegal')?.touched" class="text-danger">
+                            El <strong>Representante Legal </strong>es requerido.
+                        </span>                       
+                    </div>
+                    <div class="mb-3 col-md">
+                        <label for="empresaAcreditadora" class="form-label">Empresa Acreditadora</label>
+                        <input type="text" class="form-control" id="empresaAcreditadora" name="empresaAcreditadora" autocomplete="off" formControlName="empresaAcreditadora">
+                        <span *ngIf="editarFirma.get('empresaAcreditadora')?.invalid && editarFirma.get('empresaAcreditadora')?.touched" class="text-danger">
+                            La <strong>Empresa Acreditadora </strong>es requerido.
+                        </span>                       
+                    </div>
+                </div>               
+
+                <div class="row g-2">
+                    <div class="mb-3 col-md">
+                        <label for="fechaEmision" class="form-label">Fecha Emision</label>
+                        <input type="date" class="form-control" id="fechaEmision" name="fechaEmision" formControlName="fechaEmision">
+                        <span *ngIf="editarFirma.get('fechaEmision')?.invalid && editarFirma.get('fechaEmision')?.touched" class="text-danger">
+                            La <strong>Fecha Emision </strong>es requerido.
+                        </span>                       
+                    </div>
+                    <div class="mb-3 col-md">
+                        <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" formControlName="fechaVencimiento">
+                        <span *ngIf="editarFirma.get('fechaVencimiento')?.invalid && editarFirma.get('fechaVencimiento')?.touched" class="text-danger">
+                            La <strong>Fecha Vencimiento </strong>es requerido.
+                        </span>                       
+                    </div>
+                </div>              
+                
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="editarFirma.invalid" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                </div>
+                
+            </form> 
         </div>
        
       </div>

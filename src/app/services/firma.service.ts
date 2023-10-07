@@ -32,6 +32,12 @@ export class FirmaService {
     headers.append('Accept', '*/*');
     return this.http.post<Firma>(`${this.baseApiURL}firmaDigitalA`, firma, {headers});
   }
+
+  putFirma(id:number,firma: FormData): Observable<Firma> {
+    const headers = new HttpHeaders();
+    headers.append('Accept', '*/*');
+    return this.http.put<Firma>(`${this.baseApiURL}firmaDigitalA/${id}`, firma, {headers});
+  }
  
 
   //DESCARGAS
