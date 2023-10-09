@@ -8,7 +8,8 @@ import { Firma } from '../models/firma.model';
 })
 export class FirmaService {
   // private baseApiURL: string = "https://webapifirma.azurewebsites.net/api/"
-  private baseApiURL: string = "https://localhost:7048/api/"
+  private baseApiURL: string = "https://backendfirma.azurewebsites.net/api/"
+  //private baseApiURL: string = "https://localhost:7048/api/"
   constructor(private http: HttpClient) { }
 
   getAllFirmas(): Observable<Firma[]>{

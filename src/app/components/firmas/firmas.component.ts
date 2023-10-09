@@ -192,7 +192,7 @@ export class FirmasComponent implements OnInit {
         };
         reader.readAsDataURL(fileRubrica); */       
          this.firmadata = datafirma
-         console.log(this.firmadata);
+         //console.log(this.firmadata);
          
       },error:(e)=>{}
     })
@@ -295,6 +295,13 @@ descargarCertificado(id:number){
             error => {
               console.error('Error en la solicitud:', error);
         })
+        // Obtener el elemento de entrada de tipo archivo
+        var inputFileC = document.getElementById('certificadoDigital') as HTMLInputElement;
+        var inputFileR = document.getElementById('rutaRubrica') as HTMLInputElement;
+
+        // Limpiar el valor del campo de entrada de tipo archivo
+        inputFileC.value = '';
+        inputFileR.value = '';
         
     }else{
       //EDITAR 
@@ -341,13 +348,7 @@ descargarCertificado(id:number){
     this.editarFirma.reset();
     this.agregarFirma.reset();
 
-    // Obtener el elemento de entrada de tipo archivo
-    var inputFileC = document.getElementById('certificadoDigital') as HTMLInputElement;
-    var inputFileR = document.getElementById('rutaRubrica') as HTMLInputElement;
-
-    // Limpiar el valor del campo de entrada de tipo archivo
-    inputFileC.value = '';
-    inputFileR.value = '';
+    
     
   }
 
